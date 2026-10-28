@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f4ef">
   <title>tsumugi — トーク履歴の整理・検索</title>
-  <link rel="stylesheet" href="./styles.css?v=20261029-3">
+  <link rel="stylesheet" href="./styles.css?v=20261029-4">
 </head>
 <body>
   <div class="app-shell">
@@ -53,11 +53,6 @@
           </div>
           <label class="sr-only" for="question">抽出・調査してほしい内容</label>
           <textarea id="question" rows="5" placeholder="例：フェアの参加店舗、開催月、使う食材、想定使用量を表にまとめて。最新の発言を優先し、未確定の項目も分かるようにして。"></textarea>
-          <div class="prompt-suggestions" aria-label="依頼の例">
-            <button class="suggestion" type="button" data-prompt="参加店舗ごとに、開催期間・使用食材・想定使用量を一覧にして。最新の発言を優先し、未確定はそのまま分けて。">参加店と食材</button>
-            <button class="suggestion" type="button" data-prompt="このトークで決まったこと、未決定のこと、次に確認することを分けて整理して。根拠となる発言日も付けて。">決定事項と確認点</button>
-            <button class="suggestion" type="button" data-prompt="指定した話題について、発言の流れと最新状況を短くまとめて。重要な日付と担当者も拾って。">最新状況を整理</button>
-          </div>
 
           <label class="web-option" for="web-search">
             <input id="web-search" type="checkbox">
@@ -111,6 +106,6 @@
   <dialog id="login-dialog" aria-labelledby="login-title"><div class="settings-head"><div><p class="step-label">SIGN IN</p><h2 id="login-title">ログイン</h2></div></div><p class="settings-copy">共通IDとパスワードでログインしてください。</p><form id="login-form"><label for="login-id">ID</label><input id="login-id" type="text" autocomplete="username" required><label for="login-password">パスワード</label><input id="login-password" type="password" autocomplete="current-password" required><p id="login-error" class="settings-error" role="alert" hidden></p><button class="submit-button" type="submit">ログイン</button></form><details class="legacy-login"><summary>共通ログインを初期設定する方</summary><p class="settings-help">これまでのgourmetアカウントでログインし、初期設定を行います。</p><form id="legacy-login-form"><label for="legacy-email">メールアドレス</label><input id="legacy-email" type="email" autocomplete="username" required><label for="legacy-password">パスワード</label><input id="legacy-password" type="password" autocomplete="current-password" required><p id="legacy-error" class="settings-error" role="alert" hidden></p><button class="settings-button" type="submit">初期設定用にログイン</button></form></details></dialog>
   <dialog id="shared-setup-dialog" aria-labelledby="shared-setup-title"><div class="settings-head"><div><p class="step-label">SETUP</p><h2 id="shared-setup-title">共通ログインの初期設定</h2></div><button id="shared-setup-close" class="settings-close" type="button" aria-label="閉じる">×</button></div><p class="settings-copy">IDは <strong>marugo</strong> です。指定した共通パスワードを入力してください。保存済みの履歴・まとめ・APIキーを共通IDへ引き継ぎます。</p><form id="shared-setup-form"><label for="shared-password">共通パスワード</label><input id="shared-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><p id="shared-setup-error" class="settings-error" role="alert" hidden></p><button class="submit-button" id="shared-setup-save" type="submit">共通ログインを設定</button></form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261029-3"></script>
+  <script type="module" src="./app.js?v=20261029-4"></script>
 </body>
 </html>
