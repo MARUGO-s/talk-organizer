@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f4ef">
   <title>tsumugi — トーク履歴の整理・検索</title>
-  <link rel="stylesheet" href="./styles.css?v=20261029-6">
+  <link rel="stylesheet" href="./styles.css?v=20261029-7">
 </head>
 <body>
   <div class="app-shell">
@@ -80,6 +80,18 @@
             </div>
           </div>
           <p id="edit-help" class="edit-help" hidden>文章や表のセルを選んで編集できます。変更後は「変更を保存」を押してください。</p>
+          <section id="refine-area" class="refine-area" aria-labelledby="refine-title" hidden>
+            <h3 id="refine-title">このまとめについて追加でお願いする</h3>
+            <p>元のトーク履歴を読み直して、内容を確認します。</p>
+            <label for="refine-question" class="sr-only">追加のお願い</label>
+            <textarea id="refine-question" placeholder="例：使用量を追加して、店舗ごとに簡潔にまとめて" rows="3"></textarea>
+            <button id="refine-submit" class="submit-button" type="button">追加のお願いを送る</button>
+            <div id="refine-notice" class="refine-notice" role="status" hidden></div>
+            <div class="refine-actions">
+              <button id="refine-summary-only" class="download-button" type="button" hidden>まとめだけを使って続ける</button>
+              <button id="refine-link" class="download-button" type="button" hidden>選択中のトークを元の履歴として紐づける</button>
+            </div>
+          </section>
           <div class="result-content" id="result-content" aria-live="polite">
             <div class="result-empty">
               <div class="result-illustration" aria-hidden="true"><span class="bubble bubble-one"></span><span class="bubble bubble-two"></span><span class="bubble bubble-three"></span><i>?</i></div>
@@ -111,6 +123,6 @@
   <dialog id="login-dialog" aria-labelledby="login-title"><div class="settings-head"><div><p class="step-label">SIGN IN</p><h2 id="login-title">ログイン</h2></div></div><p class="settings-copy">共通IDとパスワードでログインしてください。</p><form id="login-form"><label for="login-id">ID</label><input id="login-id" type="text" autocomplete="username" required><label for="login-password">パスワード</label><input id="login-password" type="password" autocomplete="current-password" required><p id="login-error" class="settings-error" role="alert" hidden></p><button class="submit-button" type="submit">ログイン</button></form><details class="legacy-login"><summary>共通ログインを初期設定する方</summary><p class="settings-help">これまでのgourmetアカウントでログインし、初期設定を行います。</p><form id="legacy-login-form"><label for="legacy-email">メールアドレス</label><input id="legacy-email" type="email" autocomplete="username" required><label for="legacy-password">パスワード</label><input id="legacy-password" type="password" autocomplete="current-password" required><p id="legacy-error" class="settings-error" role="alert" hidden></p><button class="settings-button" type="submit">初期設定用にログイン</button></form></details></dialog>
   <dialog id="shared-setup-dialog" aria-labelledby="shared-setup-title"><div class="settings-head"><div><p class="step-label">SETUP</p><h2 id="shared-setup-title">共通ログインの初期設定</h2></div><button id="shared-setup-close" class="settings-close" type="button" aria-label="閉じる">×</button></div><p class="settings-copy">IDは <strong>marugo</strong> です。指定した共通パスワードを入力してください。保存済みの履歴・まとめ・APIキーを共通IDへ引き継ぎます。</p><form id="shared-setup-form"><label for="shared-password">共通パスワード</label><input id="shared-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><p id="shared-setup-error" class="settings-error" role="alert" hidden></p><button class="submit-button" id="shared-setup-save" type="submit">共通ログインを設定</button></form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261029-6"></script>
+  <script type="module" src="./app.js?v=20261029-7"></script>
 </body>
 </html>
