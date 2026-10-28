@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f4ef">
-  <title>トーク整理室</title>
-  <link rel="stylesheet" href="./styles.css?v=20261029-2">
+  <title>tsumugi — トーク履歴の整理・検索</title>
+  <link rel="stylesheet" href="./styles.css?v=20261029-3">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <a class="brand" href="./index.html" aria-label="トーク整理室 ホーム">
-        <span class="brand-mark" aria-hidden="true">話</span>
-        <span><strong>トーク整理室</strong><small>会話から、必要な情報だけ。</small></span>
+      <a class="brand" href="./index.html" aria-label="tsumugi ホーム">
+        <span class="brand-mark" aria-hidden="true">紡</span>
+        <span><strong>tsumugi</strong><small>会話から、必要な情報だけ。</small></span>
       </a>
       <div class="header-actions"><div class="local-badge"><span class="status-dot"></span>クラウド保存</div><button id="settings-open" class="settings-button" type="button">⚙ API設定</button></div>
     </header>
@@ -25,7 +25,7 @@
         <p class="intro-copy">LINEの書き出しテキストを入れて、聞きたいことをひとこと。<br>日付や発言の流れを見ながら、必要な情報をまとめます。</p>
       </section>
 
-      <section class="panel library-panel"><div class="panel-heading"><div><p class="step-label">LIBRARY</p><h2>保存したファイル</h2></div><button id="signout" class="settings-button" type="button">ログアウト</button></div><div class="library-grid"><div><h3>トーク履歴</h3><div id="saved-files">読み込み中…</div></div><div><h3>まとめ</h3><div id="saved-summaries">読み込み中…</div></div></div></section><div class="workspace">
+      <section class="panel library-panel"><div class="panel-heading"><div><p class="step-label">LIBRARY</p><h2>保存したファイル</h2></div><div class="header-actions"><button id="shared-setup-open" class="settings-button" type="button" hidden>共通ログインの初期設定</button><button id="signout" class="settings-button" type="button">ログアウト</button></div></div><div class="library-grid"><div><h3>トーク履歴</h3><div id="saved-files">読み込み中…</div></div><div><h3>まとめ</h3><div id="saved-summaries">読み込み中…</div></div></div></section><div class="workspace">
         <section class="panel input-panel" aria-labelledby="input-title">
           <div class="panel-heading">
             <div><p class="step-label">STEP 01 <span>資料を追加</span></p><h2 id="input-title">トーク履歴</h2></div>
@@ -93,7 +93,7 @@
       </div>
     </main>
 
-    <footer class="footer"><span>トーク整理室</span><span>資料の読み取りと整理を、ひとつの場所で。</span></footer>
+    <footer class="footer"><span>tsumugi</span><span>資料の読み取りと整理を、ひとつの場所で。</span></footer>
   </div>
   <dialog id="settings-dialog" aria-labelledby="settings-title">
     <div class="settings-head"><div><p class="step-label">SETTINGS</p><h2 id="settings-title">API設定</h2></div><button id="settings-close" class="settings-close" type="button" aria-label="閉じる">×</button></div>
@@ -108,8 +108,9 @@
     </form>
 
   </dialog>
-  <dialog id="login-dialog" aria-labelledby="login-title"><div class="settings-head"><div><p class="step-label">SIGN IN</p><h2 id="login-title">ログイン</h2></div></div><p class="settings-copy">保存した履歴とまとめを見るため、gourmetのアカウントでログインします。</p><form id="login-form"><label for="login-email">メールアドレス</label><input id="login-email" type="email" autocomplete="username" required><label for="login-password">パスワード</label><input id="login-password" type="password" autocomplete="current-password" required><p id="login-error" class="settings-error" role="alert" hidden></p><button class="submit-button" type="submit">ログイン</button></form></dialog>
+  <dialog id="login-dialog" aria-labelledby="login-title"><div class="settings-head"><div><p class="step-label">SIGN IN</p><h2 id="login-title">ログイン</h2></div></div><p class="settings-copy">共通IDとパスワードでログインしてください。</p><form id="login-form"><label for="login-id">ID</label><input id="login-id" type="text" autocomplete="username" required><label for="login-password">パスワード</label><input id="login-password" type="password" autocomplete="current-password" required><p id="login-error" class="settings-error" role="alert" hidden></p><button class="submit-button" type="submit">ログイン</button></form><details class="legacy-login"><summary>共通ログインを初期設定する方</summary><p class="settings-help">これまでのgourmetアカウントでログインし、初期設定を行います。</p><form id="legacy-login-form"><label for="legacy-email">メールアドレス</label><input id="legacy-email" type="email" autocomplete="username" required><label for="legacy-password">パスワード</label><input id="legacy-password" type="password" autocomplete="current-password" required><p id="legacy-error" class="settings-error" role="alert" hidden></p><button class="settings-button" type="submit">初期設定用にログイン</button></form></details></dialog>
+  <dialog id="shared-setup-dialog" aria-labelledby="shared-setup-title"><div class="settings-head"><div><p class="step-label">SETUP</p><h2 id="shared-setup-title">共通ログインの初期設定</h2></div><button id="shared-setup-close" class="settings-close" type="button" aria-label="閉じる">×</button></div><p class="settings-copy">IDは <strong>marugo</strong> です。指定した共通パスワードを入力してください。保存済みの履歴・まとめ・APIキーを共通IDへ引き継ぎます。</p><form id="shared-setup-form"><label for="shared-password">共通パスワード</label><input id="shared-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><p id="shared-setup-error" class="settings-error" role="alert" hidden></p><button class="submit-button" id="shared-setup-save" type="submit">共通ログインを設定</button></form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="./app.js?v=20261029-2"></script>
+  <script type="module" src="./app.js?v=20261029-3"></script>
 </body>
 </html>

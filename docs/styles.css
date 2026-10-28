@@ -24,3 +24,4 @@
  .print-field-label{font-weight:600;color:#557060}
 }
 .selection-summary{margin:12px 0 2px;font-size:11px;line-height:1.6;color:#718579}.library-item button.is-selected{border-color:#a9c5ad;background:#e8f1e8;color:#325d3f;font-weight:600}
+.legacy-login{margin-top:20px;border-top:1px solid #e5e7df;padding-top:14px;color:#647a6b;font-size:12px}.legacy-login summary{cursor:pointer}.legacy-login label,#shared-setup-form label{display:block;font-size:12px;font-weight:600;margin:14px 0 6px}.legacy-login input,#shared-password{width:100%;padding:12px;border:1px solid #dfe5dc;border-radius:9px;font:inherit}.legacy-login button{margin-top:10px}

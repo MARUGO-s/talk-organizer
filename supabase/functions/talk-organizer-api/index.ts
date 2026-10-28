@@ -1,4 +1,5 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.95.3';
+import { setupShared } from './shared-setup.ts';
 const cors = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization, x-client-info, apikey, content-type','Access-Control-Allow-Methods':'POST, OPTIONS','Content-Type':'application/json; charset=utf-8'};
 const out=(status:number, data:unknown)=>new Response(JSON.stringify(data),{status,headers:cors});
 Deno.serve(async (req:Request)=>{
@@ -11,6 +12,11 @@ Deno.serve(async (req:Request)=>{
  if(error||!user) return out(401,{error:'ログインが必要です。'});
  let body;try{body=await req.json()}catch{return out(400,{error:'入力を確認してください。'})}
  const admin=createClient(url,service,{auth:{persistSession:false}});
+ if(body.action==='shared_setup_status'){
+   const {data:eligible,error:e}=await admin.rpc('talk_organizer_can_setup_shared',{p_owner:user.id});
+   return e?out(500,{error:'初期設定の状態を確認できませんでした。'}):out(200,{eligible:eligible===true});
+ }
+ if(body.action==='setup_shared'){const reply=await setupShared(admin,auth,user.id,body.password);return out(reply.status,reply.body);}
  if(body.action==='save_key'){
    const key=typeof body.key==='string'?body.key.trim():'';
    if(!/^[A-Za-z0-9_-]{8,512}$/.test(key))return out(400,{error:'APIキーを確認してください。'});
