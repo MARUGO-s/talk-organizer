@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <title>トーク整理室</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="トーク整理室 ホーム">
+        <span class="brand-mark" aria-hidden="true">話</span>
+        <span><strong>トーク整理室</strong><small>会話から、必要な情報だけ。</small></span>
+      </a>
+      <div class="header-actions"><div class="local-badge"><span class="status-dot"></span>クラウド保存</div><button id="settings-open" class="settings-button" type="button">⚙ API設定</button></div>
+    </header>
+
+    <main>
+
+      <section class="intro">
+        <p class="eyebrow">TALK NOTE <span></span> 01</p>
+        <h1>トーク履歴を、<br class="mobile-break">知りたい形に整理する。</h1>
+        <p class="intro-copy">LINEの書き出しテキストを入れて、聞きたいことをひとこと。<br>日付や発言の流れを見ながら、必要な情報をまとめます。</p>
+      </section>
+
+      <section class="panel library-panel"><div class="panel-heading"><div><p class="step-label">LIBRARY</p><h2>保存したファイル</h2></div><button id="signout" class="settings-button" type="button">ログアウト</button></div><div class="library-grid"><div><h3>トーク履歴</h3><div id="saved-files">読み込み中…</div></div><div><h3>まとめ</h3><div id="saved-summaries">読み込み中…</div></div></div></section><div class="workspace">
+        <section class="panel input-panel" aria-labelledby="input-title">
+          <div class="panel-heading">
+            <div><p class="step-label">STEP 01 <span>資料を追加</span></p><h2 id="input-title">トーク履歴</h2></div>
+            <span class="file-type">.TXT</span>
+          </div>
+
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="LINEトーク履歴のテキストファイルを選択またはドロップ">
+            <input id="file-input" type="file" accept=".txt,text/plain" multiple hidden>
+            <div class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M16 21V5m0 0-6 6m6-6 6 6M6 20v6h20v-6"/></svg>
+            </div>
+            <strong>ファイルをここにドロップ</strong>
+            <span>または <u>ファイルを選ぶ</u></span>
+            <small>LINEのトーク履歴（.txt）・複数選択可</small>
+          </div>
+
+          <div class="file-list" id="file-list" aria-live="polite">
+            <div class="empty-files"><span class="file-icon">TXT</span><span>まだファイルはありません</span></div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="panel-heading question-heading">
+            <div><p class="step-label">STEP 02 <span>依頼を書く</span></p><h2>何を知りたいですか？</h2></div>
+          </div>
+          <label class="sr-only" for="question">抽出・調査してほしい内容</label>
+          <textarea id="question" rows="5" placeholder="例：フェアの参加店舗、開催月、使う食材、想定使用量を表にまとめて。最新の発言を優先し、未確定の項目も分かるようにして。"></textarea>
+          <div class="prompt-suggestions" aria-label="依頼の例">
+            <button class="suggestion" type="button" data-prompt="参加店舗ごとに、開催期間・使用食材・想定使用量を一覧にして。最新の発言を優先し、未確定はそのまま分けて。">参加店と食材</button>
+            <button class="suggestion" type="button" data-prompt="このトークで決まったこと、未決定のこと、次に確認することを分けて整理して。根拠となる発言日も付けて。">決定事項と確認点</button>
+            <button class="suggestion" type="button" data-prompt="指定した話題について、発言の流れと最新状況を短くまとめて。重要な日付と担当者も拾って。">最新状況を整理</button>
+          </div>
+
+          <label class="web-option" for="web-search">
+            <input id="web-search" type="checkbox">
+            <span class="checkmark" aria-hidden="true"></span>
+            <span class="web-option-text"><strong>必要ならWebも調べる</strong><small>外部情報を補足するときだけオンにしてください</small></span>
+            <span class="web-tag">任意</span>
+          </label>
+
+          <button class="submit-button" id="analyze-button" type="button" disabled>
+            <span>まとめを作成</span><span class="button-arrow" aria-hidden="true">↗</span>
+          </button>
+          <p class="privacy-note"><span aria-hidden="true">ⓘ</span> 作成時に履歴と依頼文をOpenAIへ送信します。Web検索は初期状態でオフです。API利用料が発生する場合があります。</p>
+        </section>
+
+        <section class="panel result-panel" aria-labelledby="result-title">
+          <div class="panel-heading result-heading">
+            <div><p class="step-label">STEP 03 <span>結果を確認</span></p><h2 id="result-title">まとめ</h2></div>
+            <div class="result-tools" id="result-tools" hidden>
+              <button id="copy-button" class="icon-button" type="button" title="コピー" aria-label="結果をコピー"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></button>
+              <button id="download-button" class="download-button" type="button">PDFとして保存</button>
+            </div>
+          </div>
+          <div class="result-content" id="result-content" aria-live="polite">
+            <div class="result-empty">
+              <div class="result-illustration" aria-hidden="true"><span class="bubble bubble-one"></span><span class="bubble bubble-two"></span><span class="bubble bubble-three"></span><i>?</i></div>
+              <strong>ここに整理結果が表示されます</strong>
+              <p>ファイルを追加して、知りたいことを書いてください。</p>
+            </div>
+          </div>
+          <div class="result-sources" id="result-sources" hidden></div>
+          <div class="result-footnote"><span class="tiny-star">✳</span> 履歴にない情報は推測で補わず、未確認として整理します。</div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer"><span>トーク整理室</span><span>資料の読み取りと整理を、ひとつの場所で。</span></footer>
+  </div>
+  <dialog id="settings-dialog" aria-labelledby="settings-title">
+    <div class="settings-head"><div><p class="step-label">SETTINGS</p><h2 id="settings-title">API設定</h2></div><button id="settings-close" class="settings-close" type="button" aria-label="閉じる">×</button></div>
+    <p class="settings-copy">OpenAI APIキーを設定すると、トーク履歴の整理を利用できます。</p>
+    <p id="settings-status" class="settings-status" role="status">設定を確認しています…</p>
+    <form id="settings-form">
+      <label for="api-key">OpenAI APIキー</label>
+      <input id="api-key" type="password" autocomplete="off" spellcheck="false" placeholder="APIキーを入力" required>
+      <p class="settings-help">キーはSupabase Vaultに暗号化して保存します。保存後は画面に表示されません。</p>
+      <p id="settings-error" class="settings-error" role="alert" hidden></p>
+      <button class="submit-button" id="settings-save" type="submit">設定を保存</button>
+    </form>
+
+  </dialog>
+  <dialog id="login-dialog" aria-labelledby="login-title"><div class="settings-head"><div><p class="step-label">SIGN IN</p><h2 id="login-title">ログイン</h2></div></div><p class="settings-copy">保存した履歴とまとめを見るため、gourmetのアカウントでログインします。</p><form id="login-form"><label for="login-email">メールアドレス</label><input id="login-email" type="email" autocomplete="username" required><label for="login-password">パスワード</label><input id="login-password" type="password" autocomplete="current-password" required><p id="login-error" class="settings-error" role="alert" hidden></p><button class="submit-button" type="submit">ログイン</button></form></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
