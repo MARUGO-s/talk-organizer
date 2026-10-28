@@ -29,3 +29,46 @@ export function printSummary(text, fallback, doc, win) {
   win.addEventListener('afterprint', restore, { once: true });
   try { win.print(); } catch (error) { restore(); throw error; }
 }
+
+// Preserve each Markdown table as editable spreadsheet columns, and keep other
+// lines in their original order. Multiple tables retain their own headers.
+export function summaryCsv(text, sources = []) {
+  const rows = [];
+  const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
+  const splitTable = line => {
+    const cells = [];
+    let cell = '';
+    const body = line.trim().replace(/^\|/, '').replace(/\|$/, '');
+    for (let i = 0; i < body.length; i++) {
+      if (body[i] === '\\' && body[i + 1] === '|') { cell += '|'; i++; }
+      else if (body[i] === '|') { cells.push(cell.trim()); cell = ''; }
+      else cell += body[i];
+    }
+    cells.push(cell.trim());
+    return cells;
+  };
+  for (const line of lines) {
+    const value = line.trim();
+    if (!value) { rows.push([]); continue; }
+    if (/^\|.*\|$/.test(value)) {
+      const cells = splitTable(value);
+      if (cells.every(cell => /^:?-{3,}:?$/.test(cell))) continue;
+      rows.push(cells);
+    } else {
+      rows.push([value.replace(/^#{1,6}\s+/, '').replace(/^[-*]\s+/, '')]);
+    }
+  }
+  if (Array.isArray(sources) && sources.length) {
+    rows.push([], ['参照先']);
+    for (const source of sources) {
+      if (source && (source.title || source.url)) rows.push([String(source.title || ''), String(source.url || '')]);
+    }
+  }
+  const cell = value => {
+    let safe = String(value ?? '');
+    // Spreadsheet programs can execute cells beginning with formula characters.
+    if (/^[\s\u0000-\u001f]*[=+@-]/.test(safe)) safe = "'" + safe;
+    return '"' + safe.replace(/"/g, '""') + '"';
+  };
+  return '\ufeff' + rows.map(row => row.map(cell).join(',')).join('\r\n') + '\r\n';
+}
